@@ -1,53 +1,62 @@
 #!groovy
 
-stage 'Source'
-    node {
+
+
+node {
+    wrap([$class: 'TimestamperBuildWrapper']) {
+
+        stage 'Source'
+
+        echo 'Cleaning workspace...'
+        deleteDir
         echo 'Retrieving source...'
         checkout scm
-    }
 
-stage 'Setup'
-    node {
+
+        stage 'Setup'
+ 
         echo 'Setting environment...'
-    }
+ 
 
-stage 'Dependencies'
-    node {
+        stage 'Dependencies'
+
         echo 'Retrieving dependencies...'
-        bat 'mkdir deps'
+        bat 'if not exist deps mkdir deps'
         bat 'echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt'
         bat 'echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt'
         bat 'date ; sleep 10 ; date'
-    }
 
-stage 'Fingerperinting'
-    node {
+
+        stage 'Fingerperinting'
+
         echo 'Fingerprinting dependencies...'
 //        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
-    }
 
-stage 'Build'
-    node {
+
+        stage 'Build'
+
         echo 'Building...'
 //        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
-    }
 
-stage 'Unit tests'
-    node {
+
+        stage 'Unit tests'
+
         echo 'Performing unit tests...'
-    }
 
-stage 'Pack'
-    node {
+
+        stage 'Pack'
+
         echo 'Packaging...'
-    }
 
-stage 'Extended tests'
-    node {
+
+        stage 'Extended tests'
+
         echo 'Performing extended testing...'
-    }
 
-stage 'Artifact'
-    node {
+
+        stage 'Artifact'
+
         echo 'Storing build artifacts...'
+
     }
+}
