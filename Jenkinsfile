@@ -27,7 +27,7 @@ node {
         bat 'if not exist deps mkdir deps'
         bat 'echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt'
         bat 'echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt'
-        bat 'date && sleep 10 && date'
+        bat 'time /t && sleep 10 && time /t'
 
 
         stage 'Fingerperinting'
