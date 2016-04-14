@@ -46,7 +46,9 @@ node {
 
         echo 'Building...'
 //        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
-        bat 'for /F %%i in ("1 2 3 4") do (echo "Compile file %%i" && ping -n %%i -w 10 )'
+        timeout (30) {
+            bat 'for /F %i in (1 2 3 4) do (echo "Compile file %i" && ping -n %i -w 10 )'
+        }
 
 
         stage 'Unit tests'
