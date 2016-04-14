@@ -17,19 +17,19 @@ stage 'Dependencies'
         bat 'bash -c "mkdir -p deps"'
         bat 'bash -c "echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt"'
         bat 'bash -c "echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt"'
-        bat 'bash -c "date ; sleep 10 ; date "'
+//        bat 'bash -c "date ; sleep 10 ; date "'
     }
 
 stage 'Fingerperinting'
     node {
         echo 'Fingerprinting dependencies...'
-        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
+//        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
     }
 
 stage 'Build'
     node {
         echo 'Building...'
-        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
+//        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
     }
 
 stage 'Unit tests'
