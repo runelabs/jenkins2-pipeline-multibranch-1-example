@@ -5,10 +5,13 @@
 node {
     wrap([$class: 'TimestamperBuildWrapper']) {
 
-        stage 'Source'
+        stage 'Clean'
 
         echo 'Cleaning workspace...'
         deleteDir()
+
+        stage 'Source'
+
         echo 'Retrieving source...'
         checkout scm
 
