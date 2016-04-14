@@ -8,7 +8,7 @@ node {
         stage 'Source'
 
         echo 'Cleaning workspace...'
-        deleteDir
+        deleteDir()
         echo 'Retrieving source...'
         checkout scm
 
