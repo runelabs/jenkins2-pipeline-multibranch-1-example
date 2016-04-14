@@ -14,10 +14,10 @@ stage 'Setup'
 stage 'Dependencies'
     node {
         echo 'Retrieving dependencies...'
-        bat 'bash -c "mkdir -p deps"'
-        bat 'bash -c "echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt"'
-        bat 'bash -c "echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt"'
-        bat 'bash -c "date ; sleep 10 ; date "'
+        bat 'mkdir deps'
+        bat 'echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt'
+        bat 'echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt'
+        bat 'date ; sleep 10 ; date'
     }
 
 stage 'Fingerperinting'
