@@ -29,7 +29,7 @@ stage 'Fingerperinting'
 stage 'Build'
     node {
         echo 'Building...'
-//        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
+        bat 'bash -c "for i in 1 2 3 4 ; do echo Compile\\ file\\ $i ; sleep $i ; done"'
     }
 
 stage 'Unit tests'
