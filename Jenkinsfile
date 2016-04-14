@@ -19,6 +19,11 @@ stage 'Dependencies'
         bat 'bash -c "echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep"'
   //      bat 'bash -c \'date +%s ; sleep "$(date +%s | cut -c-2)" ; date +%s\''
         bat 'bash -c "date +%%s ; sleep 10 ; date +%%s"'
+    }
+
+stage 'Fingerperinting'
+    node {
+        echo 'Fingerprinting dependencies...'
         step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
     }
 
