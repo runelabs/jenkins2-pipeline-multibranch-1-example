@@ -1,12 +1,12 @@
 #!groovy
 
 
-
+/**
 
 properties([
     [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '1', daysToKeepStr: '', numToKeepStr: '']]
   ])
-
+**/
 
 node {
     wrap([$class: 'TimestamperBuildWrapper']) {
@@ -31,10 +31,10 @@ node {
         stage 'Dependencies'
 
         echo 'Retrieving dependencies...'
-        bat 'if not exist deps mkdir deps'
-        bat 'echo some-dependency-content-perhaps-binary-somedep-1220 > deps/somedep-1.22.0.dep.txt'
-        bat 'echo some-dependency-content-perhaps-binary-otherdep-421132 > deps/otherdep-4.2.113-2.dep.txt'
-        bat 'time /t && ping 127.0.0.1 -n 6 -w 10 2>nul >nul && time /t'
+        bat '''' if not exist deps mkdir deps '''
+        bat '''' echo some-dependency-content-perhaps-binary-somedep-1220 > deps\somedep-1.22.0.dep.txt '''
+        bat ''' echo some-dependency-content-perhaps-binary-otherdep-421132 > deps\otherdep-4.2.113-2.dep.txt '''
+        bat ''' time /t && ping 127.0.0.1 -n 6 -w 10 2>nul >nul && time /t '''
 
 
         stage 'Fingerperinting'
