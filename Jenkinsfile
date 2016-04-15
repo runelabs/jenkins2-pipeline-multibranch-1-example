@@ -1,12 +1,10 @@
 #!groovy
 
 
-/**
 
 properties([
     [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '1', daysToKeepStr: '', numToKeepStr: '']]
   ])
-**/
 
 node {
     wrap([$class: 'TimestamperBuildWrapper']) {
@@ -40,7 +38,7 @@ node {
         stage 'Fingerperinting'
 
         echo 'Fingerprinting dependencies...'
-//        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
+        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
 
 
         stage 'Build'
