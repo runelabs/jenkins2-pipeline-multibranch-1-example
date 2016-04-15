@@ -8,11 +8,12 @@ properties([
 
 node {
     wrap([$class: 'TimestamperBuildWrapper']) {
-
+      def startTime = System.currentTimeMillis()
+      def wsDir = getWorkspace(startTime) 
+      ws (wsDir) {
         stage 'Workspace'
 
-        def startTime = System.currentTimeMillis()
-        echo "Started " + startTime
+        echo "Using " + wsDir
         pwd()
         echo 'Cleaning...'
         deleteDir()
@@ -74,5 +75,11 @@ node {
 
         echo 'Storing build artifacts...'
 
+      }
     }
+}
+
+
+def getWorkspace(time) {
+    pwd().replace("%2F", "_") + '-' + time
 }
