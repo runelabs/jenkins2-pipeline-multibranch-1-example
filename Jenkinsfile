@@ -27,8 +27,8 @@ node {
         stage 'Setup'
  
         echo 'Setting environment...'
-        bat ''' start dir '''
         sh "echo env"
+        bat ''' start dir '''
  
 
         stage 'Dependencies'
