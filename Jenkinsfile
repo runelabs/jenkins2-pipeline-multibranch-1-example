@@ -11,6 +11,8 @@ node {
 
         stage 'Workspace'
 
+        def startTime = System.currentTimeMillis();
+        echo "Started " + startTime
         pwd()
         echo 'Cleaning...'
         deleteDir()
