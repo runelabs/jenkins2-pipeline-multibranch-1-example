@@ -24,7 +24,7 @@ node {
         stage 'Setup'
  
         echo 'Setting environment...'
-        bat ''' start dir '''
+        bat ''' env && start dir '''
         sh "echo env"
  
 
