@@ -11,7 +11,7 @@ node {
 
         stage 'Workspace'
 
-        def startTime = epochMillis()
+        def startTime = System.currentTimeMillis()
         echo "Started " + startTime
         pwd()
         echo 'Cleaning...'
@@ -75,10 +75,4 @@ node {
         echo 'Storing build artifacts...'
 
     }
-}
-
-
-@NonCPS
-def epochMillis() {
-    System.currentTimeMillis()
 }
