@@ -47,7 +47,7 @@ node {
 
         echo 'Building...'
         timeout(time: 30, unit: 'SECONDS') {
-            bat ''' for /F %%i in (1, 1, 4) do ( echo "Compile file %%i" && ping -n %%i -w 10 )'''
+            bat ''' for /L %%i in (1, 1, 4) do ( echo "Compile file %%i" && ping -n %%i -w 10 ) '''
         }
 
 
