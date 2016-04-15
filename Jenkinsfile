@@ -38,7 +38,8 @@ node {
         stage 'Fingerperinting'
 
         echo 'Fingerprinting dependencies...'
-        step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
+        //step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
+        step([$class: 'Fingerprinter', targets: 'deps/**/*'])
 
 
         stage 'Build'
