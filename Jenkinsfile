@@ -24,6 +24,7 @@ node {
         stage 'Setup'
  
         echo 'Setting environment...'
+        sh "echo env"
  
 
         stage 'Dependencies'
