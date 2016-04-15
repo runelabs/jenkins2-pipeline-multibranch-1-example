@@ -32,8 +32,8 @@ node {
 
         echo 'Retrieving dependencies...'
         bat '''' if not exist deps mkdir deps '''
-        bat '''' echo some-dependency-content-perhaps-binary-somedep-1220 > deps\somedep-1.22.0.dep.txt '''
-        bat ''' echo some-dependency-content-perhaps-binary-otherdep-421132 > deps\otherdep-4.2.113-2.dep.txt '''
+        bat '''' echo some-dependency-content-perhaps-binary-somedep-1220 > deps\\somedep-1.22.0.dep.txt '''
+        bat ''' echo some-dependency-content-perhaps-binary-otherdep-421132 > deps\\otherdep-4.2.113-2.dep.txt '''
         bat ''' time /t && ping 127.0.0.1 -n 6 -w 10 2>nul >nul && time /t '''
 
 
