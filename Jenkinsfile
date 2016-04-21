@@ -32,7 +32,7 @@ node("nuc") {
             echo hei igjen fra bash
         '''
         sh '''#!python
-            print("heisann sveisann")
+print("heisann sveisann")
         '''
         bat ''' start dir '''
  
