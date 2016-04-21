@@ -28,9 +28,9 @@ node("nuc") {
  
         echo 'Setting environment...'
         sh '''echo hei'''
-//        sh '''#!bash
-//            echo hei
-//        '''
+        sh '''#!bash
+            echo hei igjen fra bash
+        '''
         bat ''' start dir '''
  
 
