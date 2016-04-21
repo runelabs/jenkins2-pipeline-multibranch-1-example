@@ -9,7 +9,8 @@ properties([
 node("nuc") {
     wrap([$class: 'TimestamperBuildWrapper']) {
       def startTime = System.currentTimeMillis()
-      def wsDir = getWorkspace(startTime) 
+      def wsDir = getWorkspace(startTime)
+      wsDir = 'xam'
       ws (wsDir) {
         stage 'Workspace'
 
@@ -21,7 +22,8 @@ node("nuc") {
         stage 'Source'
 
         echo 'Retrieving source...'
-        checkout scm
+//        checkout scm
+        sh ''' echo "checkout scm" '''
 
 
         stage 'Setup'
@@ -32,9 +34,8 @@ node("nuc") {
             echo hei igjen fra bash
         '''
         sh '''#!python
-print("heisann sveisann")
+print("heisann sveisann påan")
         '''
-        bat ''' start dir '''
  
 
         stage 'Dependencies'
