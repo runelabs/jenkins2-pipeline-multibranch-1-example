@@ -31,6 +31,9 @@ node("nuc") {
         sh '''#!bash
             echo hei igjen fra bash
         '''
+        sh '''#!python
+            print "heisann sveisann"
+        '''
         bat ''' start dir '''
  
 
