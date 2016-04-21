@@ -27,9 +27,9 @@ node("nuc") {
         stage 'Setup'
  
         echo 'Setting environment...'
-        sh '''#!bash
-            echo hei
-        '''
+//        sh '''#!bash
+//            echo hei
+//        '''
         bat ''' start dir '''
  
 
