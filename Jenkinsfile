@@ -6,7 +6,7 @@ properties([
     [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '1', daysToKeepStr: '', numToKeepStr: '']]
   ])
 
-node {
+node("nuc") {
     wrap([$class: 'TimestamperBuildWrapper']) {
       def startTime = System.currentTimeMillis()
       def wsDir = getWorkspace(startTime) 
