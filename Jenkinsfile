@@ -24,6 +24,8 @@ node("nuc") {
         echo 'Retrieving source...'
 //        checkout scm
         sh ''' echo "checkout scm" '''
+        echo "pr3 +++"
+        echo "jadddddda"
 
 
         stage 'Setup'
