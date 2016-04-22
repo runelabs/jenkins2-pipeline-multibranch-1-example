@@ -6,66 +6,102 @@ properties([
     [$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '1', daysToKeepStr: '', numToKeepStr: '']]
   ])
 
-node("nuc") {
+node("windows") {
     wrap([$class: 'TimestamperBuildWrapper']) {
       def startTime = System.currentTimeMillis()
       def wsDir = getWorkspace(startTime)
       wsDir = 'xam'
+      envVersion = '1.0.0.272'
+      envPlatform = 'ARM'
+      envConfig = 'Debug'
+      envOutput = 'output'
+      envProject = 'Capture.UniWin/Capture.UniWin.WindowsPhone/Capture.UniWin.WindowsPhone.csproj'
+      envMsbuild = '/c/Program\\ Files\\ \\(x86\\)/MSBuild/14.0/Bin/MSBuild.exe'
+      envCmd = "$envMsbuild -p:Platform=$envPlatform -p:Configuration=$envConfig -p:OutputPath=$envOutput $envProject"
       ws (wsDir) {
         stage 'Workspace'
 
         echo "Using " + wsDir
         pwd()
         echo 'Cleaning...'
-        deleteDir()
+//        deleteDir()
 
         stage 'Source'
 
         echo 'Retrieving source...'
 //        checkout scm
-        sh ''' echo "checkout scm" '''
+        sh ''' git remote -v '''
+        sh ''' git branch -va '''
+        sh ''' git status '''
+
+        echo 'Retrieving submodules...'
+
+        sh ''' git submodule init '''
+        sh ''' git submodule sync '''
+        sh ''' git submodule update '''
+
+
 
 
         stage 'Setup'
  
         echo 'Setting environment...'
-        sh '''echo hei'''
-        sh '''#!bash
-            echo hei igjen fra bash
-        '''
-        sh '''#!python
-print("heisann sveisann påan")
-        '''
+        sh """ python set_package_version_number.py "$envVersion" """
+//        sh '''#!bash
+//            echo hei igjen fra bash
+//        '''
+//        sh '''#!python
+//print("heisann fra python")
+//        '''
  
 
         stage 'Dependencies'
 
         echo 'Retrieving dependencies...'
-        bat ''' if not exist deps mkdir deps '''
-        bat ''' echo some-dependency-content-perhaps-binary-somedep-1220 > deps\\somedep-1.22.0.dep.txt '''
-        bat ''' echo some-dependency-content-perhaps-binary-otherdep-421132 > deps\\otherdep-4.2.113-2.dep.txt '''
-        bat ''' time /t && ping 127.0.0.1 -n 6 -w 10 2>nul >nul && time /t '''
+        sh ''' .nuget/NuGet.exe restore Capture.sln '''
 
 
         stage 'Fingerperinting'
 
         echo 'Fingerprinting dependencies...'
         //step([$class: 'ArtifactArchiver', artifacts: 'deps/**/*', fingerprint: true])
-        step([$class: 'Fingerprinter', targets: 'deps/**/*'])
+        step([$class: 'Fingerprinter', targets: 'packages/**/*'])
+        step([$class: 'Fingerprinter', targets: './**/*.dll'])
 
 
         stage 'Build'
 
         echo 'Building...'
-//        timeout(time: 30, unit: 'SECONDS') {
-//            bat ''' for /L %%i in (1, 1, 4) do ( echo "Compile file %%i" && ping 127.0.0.1 -n %%i -w 10 ) '''
-//        }
-        bat ''' echo "Compile file 1" && ping 127.0.0.1 -n 1 -w 10 '''
+        timeout(time: 30, unit: 'SECONDS') {
+          sh """ $envCmd """
+        }
+
+        echo 'Fingerprinting artifacts...'
+        step([$class: 'Fingerprinter', targets: './**/*.appx'])
+        step([$class: 'Fingerprinter', targets: './**/*.dll'])
 
 
         stage 'Unit tests'
 
+          envTest1 = 'NetlifeLib/NetlifeLib.Common.UnitTest/NetlifeLib.Common.UnitTest.csproj'
+          envTest2 = 'Capture.Core.UnitTest/Capture.Core.UnitTest.csproj'
+          envTest3 = 'Capture.Model/Capture.Model.Impl.UnitTest/Capture.Model.Impl.UnitTest.csproj'
+
+          sh """ $envMsbuild $envTest1 """
+          sh """ $envMsbuild $envTest2 """
+          sh """ $envMsbuild $envTest3 """
+
+
         echo 'Performing unit tests...'
+
+          envTestCmd = 'packages/NUnit.Console.3.0.1/tools/nunit3-console.exe NetlifeLib/NetlifeLib.Common.UnitTest/bin/Debug/NetlifeLib.Common.UnitTest.dll Capture.Core.UnitTest/bin/Debug/Capture.Core.UnitTest.dll Capture.Model/Capture.Model.Impl.UnitTest/bin/Debug/Capture.Model.Impl.UnitTest.dll'
+          sh """ $envTestCmd """
+
+        echo 'Performing coverage...'
+          sh """
+            cd UnitTestCoverage
+            python ./run_dotcover.py
+          """
 
 
         stage 'Pack'
