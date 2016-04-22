@@ -17,12 +17,16 @@ node("nuc") {
         echo "Using " + wsDir
         pwd()
         echo 'Cleaning...'
-        deleteDir()
+//        deleteDir()
 
         stage 'Source'
 
         echo 'Retrieving source...'
 //        checkout scm
+        sh ''' git remote -v '''
+        sh ''' git branch -va '''
+        sh ''' git status '''
+
         sh ''' echo "checkout scm" '''
         echo "pr3 +++"
         echo "jadddddda"
